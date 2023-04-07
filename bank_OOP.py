@@ -8,3 +8,11 @@ class Client:
 
     def add_account(self, account):
         self.accounts.append(account)
+
+
+class PrivateClient(Client):
+    def __init__(self, tax_number, name, birth_date, address):
+        super().__init__(address)
+        self.tax_number = tax_number
+        self.name = name
+        self.birth_date = birth_date
