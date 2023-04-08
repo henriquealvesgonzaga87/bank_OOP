@@ -1,3 +1,4 @@
+from abc import ABC, abstractclassmethod, abstractproperty
 class Client:
     def __init__(self, address):
         self.address = address
@@ -117,3 +118,14 @@ class Historic:
                 "value": transaction.value
             }
         )
+
+
+class Transaction(ABC):
+    @property
+    @abstractproperty
+    def value(self):
+        pass
+
+    @abstractclassmethod
+    def register(cls, account):
+        pass
