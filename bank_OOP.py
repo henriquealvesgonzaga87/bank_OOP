@@ -144,4 +144,17 @@ class Withdraw(Transaction):
 
         if success_transaction:
             account.historic.add_transactions(self)
-        
+
+
+class Deposit(Transaction):
+    def __init__(self, value):
+        self._value = value
+
+    @property
+    def value(self):
+        return self._value
+
+    def register(self, account):
+        success_transaction = account.withdraw(self._value)
+        if success_transaction:
+            account.historic.add_transactions(self)
