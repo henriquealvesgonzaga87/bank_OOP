@@ -80,7 +80,8 @@ class BankAccount(Account):
         self._limit_quantity_withdraw = limit_quantity_withdraw
 
     def withdraw(self, value):
-        quantity_withdraw = len(i for i in self.historic.transactions if i["type"] == Withdraw.__name__)
+        quantity_withdraw = len(
+            [transaction for transaction in self.historic.transactions if transaction["type"] == Withdraw.__name__])
         limit_amount_exceeded = value > self._limit_amount_withdraw
         limit_withdraw_exceede = quantity_withdraw > self._limit_quantity_withdraw
 
@@ -99,3 +100,20 @@ class BankAccount(Account):
             Bank Account:\t{self.number}
             Client:\t{self.client.name}
         """
+
+
+class Historic:
+    def __init__(self):
+        self._transactions = []
+
+    @property
+    def transactions(self):
+        return self._transactions
+
+    def add_transactions(self, transaction):
+        self._transactions.append(
+            {
+                "type": transaction.__class__.__name__,
+                "value": transaction.value
+            }
+        )
