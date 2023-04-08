@@ -71,3 +71,31 @@ class Account:
             print("Operation denied! The amount informed is not valid!")
             return False
         return True
+
+
+class BankAccount(Account):
+    def __init__(self, number, client, limit_amount_withdraw=500, limit_quantity_withdraw=3):
+        super().__init__(number, client)
+        self._limit_amount_withdraw = limit_amount_withdraw
+        self._limit_quantity_withdraw = limit_quantity_withdraw
+
+    def withdraw(self, value):
+        quantity_withdraw = len(i for i in self.historic.transactions if i["type"] == Withdraw.__name__)
+        limit_amount_exceeded = value > self._limit_amount_withdraw
+        limit_withdraw_exceede = quantity_withdraw > self._limit_quantity_withdraw
+
+        if limit_amount_exceeded:
+            print("Operation denied. The limit of $500.00 has been exceeded!")
+
+        elif limit_withdraw_exceede:
+            print("Operation denied. The limir of 3 withdraws has been exceeded!")
+
+        else:
+            super().withdraw(value)
+
+    def __str__(self):
+        return f"""\
+            Agency:\t{self.agency}
+            Bank Account:\t{self.number}
+            Client:\t{self.client.name}
+        """
